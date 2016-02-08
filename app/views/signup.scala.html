@@ -1,0 +1,40 @@
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
+
+@()
+
+
+@main() {
+
+	<div class="container">
+		<h1>Sign up</h1>
+
+		<form action="@routes.User.signup" method="POST">
+
+
+			<div class="form-group">
+				<label >Email
+					<input name="email" type="email" class="form-control" placeholder="Email">
+				</label>
+
+				<label >Password
+					<input name="hashpassword" type="password" class="form-control" placeholder="Password">
+				</label>
+
+				<label >Name
+					<input name="name" type="text" class="form-control" placeholder="Phone">
+				</label>
+				<label >Phone
+					<input name="phone" type="text" class="form-control" placeholder="Phone">
+				</label>
+
+				<label >Ctime (just for test)
+					<input name="ctime" type="time" class="form-control" placeholder="Phone">
+				</label>
+
+			</div>
+			<button type="submit" class="btn btn-primary">Login</button>
+		</form>
+	</div>
+}
+

@@ -10,6 +10,9 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
+  filters,
+  "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
+  "com.typesafe.play" %% "play-slick" % "1.1.1",
   specs2 % Test
 )
 
@@ -21,3 +24,4 @@ routesGenerator := InjectedRoutesGenerator
 
 
 fork in run := false
+

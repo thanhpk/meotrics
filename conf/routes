@@ -3,7 +3,35 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET         /                    controllers.Application.landing
+
+#POST        /user                controllers.User.create
+
+POST        /login               controllers.User.login
+
+GET         /logout              controllers.User.logout
+
+GET         /login               controllers.User.viewLogin
+
+GET         /signup              controllers.User.viewSignup
+
+POST        /signup              controllers.User.signup
+
+#POST        /app/event           controllers.Event.create
+
+GET         /app                 controllers.Application.index
+
+#GET         /app/setup           controllers.Application.setup
+
+#GET         /app/segment         controllers.Application.segment
+
+#GET         /app/trend           controllers.Application.trend
+
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+
+#GET         /js/*file            controllers.Assets.versioned(path="/public/javascript", file: Asset)
+
+#GET         /css/*file           controllers.Assets.versioned(path="/public/stylesheets", file: Asset)
+

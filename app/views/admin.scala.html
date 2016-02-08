@@ -1,0 +1,9 @@
+@()(implicit session: Session)
+
+@main(){
+
+	<div class="container">
+		USERNAME : @session.get("email")
+		PASSWORD:  @session.get("password")
+	</div>
+}

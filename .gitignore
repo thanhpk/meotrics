@@ -3,6 +3,10 @@ target
 out
 project/project
 project/target
+project/.sbtserver.lock
+project/.sbtserver
+project/sbt-ui.sbt
+project/play-fork-run.sbt
 /.idea
 /.idea_modules
 /.classpath
@@ -10,3 +14,5 @@ project/target
 /.settings
 /RUNNING_PID
 /.sbtserver
+conf/application.conf
+conf/logback.xml

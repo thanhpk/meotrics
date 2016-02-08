@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+
+<h1>Oh hi there, i am Mr.Sound</h1>
+
+
+<button id="es">Record event</button>
+
+<label for="userid"></label><input type="text" id="userid"/>
+<button id="im">Identify Me</button>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="//meotrics.com/js/meotrics.js"></script>
+
+<script>
+    $('#es').click(function()
+    {
+        Meo.record({
+            event_type: 'DF_DEF',
+            valuen1: 300,
+            valuen2: 43
+        })
+    });
+
+    $('#im').click(function()
+    {
+        Meo.detect({
+            userid: 234,
+            username: "pham kiều thanh"
+        })
+    })
+</script>
+</body>
+</html>
