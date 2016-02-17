@@ -1,3 +1,9 @@
 @main(){
+<p>Your new application is ready.</p>
 
+
+
+	Redirect(routes.Application.index()).withSession(
+	"email" → userData.email,
+	"password" → userData.password)
 }

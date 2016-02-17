@@ -7,18 +7,23 @@ import play.api.db._
 import play.api.Play.current
 import javax.inject.Inject
 
-class Application @Inject()(cache: CacheApi) extends Controller {
+import ua_parser.Parser;
+import ua_parser.Client;
 
+class Application @Inject()(cache: CacheApi) extends Controller {
 	val ds = DB.getDataSource()
 
+	def landing = Action {
+		val uaString = "Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B206 Safari/7534.48.3";
 
-	def landing = Action{
+		val uaParser = new Parser()
+		val c = uaParser.parse(uaString)
 
 		Ok(views.html.landing())
 	}
 
-	def index() = Action { request =>
-		implicit  val session: Session = request.session
+	def index() = Action { request ⇒
+		implicit val session: Session = request.session
 		var outString = "Number is "
 		val conn = DB.getConnection()
 		try {
@@ -34,4 +39,9 @@ class Application @Inject()(cache: CacheApi) extends Controller {
 
 	}
 
+	def setupVisitor() = play.mvc.Results.TODO
+
+	def identifyVisitor() = play.mvc.Results.TODO
+
+	def recordAction() = play.mvc.Results.TODO
 }
