@@ -5,7 +5,7 @@ jdk:
 - oraclejdk8
 script:
 - sbt compile
-- activator dist
+- ./activator dist
 - ls
 cache: 
   directories:
