@@ -6,6 +6,7 @@ jdk:
 before_install: unset SBT_OPTS JVM_OPTS
 script:
 - sbt compile
+- chmod ugo+x activator
 - ./activator dist
 - ls
 cache: 
