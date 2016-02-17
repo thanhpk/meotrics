@@ -3,9 +3,9 @@ scala:
 - 2.11.6
 jdk:
 - oraclejdk8
+before_install: unset SBT_OPTS JVM_OPTS
 script:
 - sbt compile
-- chmod ugo+x activator
 - ./activator dist
 - ls
 cache: 
@@ -13,4 +13,4 @@ cache:
   - target
   - project
   - $HOME/.ivy2/cache
-  - $HOME/.sbt/boot/scala-$TRAVIS_SCALA_VERSION
+  - $HOME/.sbt/
