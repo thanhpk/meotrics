@@ -5,6 +5,7 @@ jdk:
 - oraclejdk8
 script:
 - sbt compile
+- chmod ugo+x activator
 - ./activator dist
 - ls
 cache: 
