@@ -6,6 +6,7 @@ import anorm.{ResultSetParser, RowParser, ~, _}
 import play.api.db.DB
 import play.api.mvc.Request
 import utils.RParser
+import play.api.Play.current
 
 object Action {
 	val PAGEVIEW: Int = 0

@@ -4,4 +4,10 @@ scala:
 jdk:
 - oraclejdk8
 script:
+- ls
 - sbt test
+- ls
+cache: 
+  directories:
+  - target
+  - project
