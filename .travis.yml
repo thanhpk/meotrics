@@ -4,10 +4,11 @@ scala:
 jdk:
 - oraclejdk8
 script:
-- ls
-- sbt test
+- sbt compile
 - ls
 cache: 
   directories:
   - target
   - project
+  - $HOME/.ivy2/cache
+  - $HOME/.sbt/boot/scala-$TRAVIS_SCALA_VERSION
