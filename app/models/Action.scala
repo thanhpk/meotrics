@@ -3,10 +3,10 @@ package models
 import java.util.Date
 import anorm.SqlParser._
 import anorm.{ResultSetParser, RowParser, ~, _}
+import play.api.Play.current
 import play.api.db.DB
 import play.api.mvc.Request
 import utils.RParser
-import play.api.Play.current
 
 object Action {
 	val PAGEVIEW: Int = 0
@@ -38,27 +38,25 @@ object Action {
 			double("n2") ~
 			str("lang") ~
 			double("browserversion") ~
-			short("osversion") map {
-			case id ~ visitorid ~ eventid ~ appid ~ osid ~ browserid ~
-				locationid ~ referer ~ campaignid ~ deviceid ~ ctime ~ ip ~
-				screenres ~ totalsec ~ age ~ url ~ s1 ~ s2 ~ n1 ~ n2 ~ lang ~
-				browserversion ~ osversion ⇒
-				Action(id, visitorid, eventid, appid, osid, browserid, locationid, referer,
-					campaignid, deviceid, ctime, ip, screenres, totalsec, age, url, s1, s2, n1,
-					n2, lang, browserversion, osversion)
+			short("osversion") ~
+			byte("devicetype") map {
+			case id ~ visitorid ~ eventid ~ appid ~ osid ~ browserid ~ locationid ~ referer ~ campaignid ~ deviceid ~
+				ctime ~ ip ~ screenres ~ totalsec ~ age ~ url ~ s1 ~ s2 ~ n1 ~ n2 ~ lang ~ browserversion ~ osversion ~
+				devicetype ⇒
+				Action(id, visitorid, eventid, appid, osid, browserid, locationid,
+					referer, campaignid, deviceid, ctime, ip, screenres, totalsec,
+					age, url, s1, s2, n1, n2, lang, browserversion, osversion,
+					devicetype)
 		}
 	}
 
-	case class Action(id: Long, visitorid: Long, eventid: Int, appid: Integer,
-	                  osid: Byte, browserid: Byte, locationid: Short, referer: String,
-	                  campaignid: Int, deviceid: Short, ctime: Date,
-	                  ip: String, screenres: String, totalsec: Int, age: Short,
-	                  url: String, s1: String, s2: String, n1: Double, n2: Double,
-	                  lang: String, browserversion: BigDecimal, osversion: Short)
+	case class Action(id: Long, visitorid: Long, eventid: Int, appid: Integer, osid: Byte, browserid: Byte,
+	                  locationid: Short, referer: String, campaignid: Int, deviceid: Short, ctime: Date,
+	                  ip: String, screenres: String, totalsec: Int, age: Short, url: String, s1: String,
+	                  s2: String, n1: Double, n2: Double, lang: String, browserversion: BigDecimal,
+	                  osversion: Short, devicetype: Byte)
 
-	val actionsParser: ResultSetParser[List[Action]] = {
-		actionParser *
-	}
+	val actionsParser: ResultSetParser[List[Action]] = actionParser.*
 
 	def bindRequest(implicit request: Request[Any]): Action = {
 		Action(
@@ -84,30 +82,34 @@ object Action {
 			RParser.pF("n2"),
 			RParser.pS("lang"),
 			RParser.pF("browserversion"),
-			RParser.pSh("osversion")
+			RParser.pSh("osversion"),
+			RParser.pb("devicetype")
 		)
 	}
 
 	def create(a: Action): Long = DB.withConnection { implicit c ⇒
 		//create an user
 		val actionid =
-			SQL"""insert into tbaction (visitorid, eventid, appid, osid, browserid, locationid, referer,
-				campaignid, deviceid, ctime, ip, screenres, totalsec, age, url,
-				n1, n2, lang, s1, s2, browserversion, osversion) values
-				(${a.visitorid},${a.eventid},${a.appid}, ${a.osid}, ${a.browserid},
-				${a.locationid}, ${a.referer}, ${a.campaignid}, ${a.deviceid}, ${new java.util.Date()}, ${a.ip},
-				${a.screenres}, ${a.totalsec}, ${a.age}, ${a.url}, ${a.n1}, ${a.n2}, ${a.lang}, ${a.s1},
-			${a.s2}, ${a.browserversion}, ${a.osversion}) returning id""".as(SqlParser.long("id").single)
-
+			SQL"""insert into tbaction (visitorid, eventid, appid, osid,
+			browserid, locationid, referer,campaignid, deviceid, ctime,
+			ip, screenres, totalsec, age, url, n1, n2, lang, s1, s2,
+			browserversion, osversion, devicetype) values
+			(${a.visitorid},${a.eventid},${a.appid}, ${a.osid},
+			${a.browserid},${a.locationid}, ${a.referer}, ${a.campaignid},
+			${a.deviceid}, ${new java.util.Date()}, ${a.ip},${a.screenres},
+			${a.totalsec}, ${a.age}, ${a.url}, ${a.n1}, ${a.n2}, ${a.lang},
+			${a.s1},${a.s2}, ${a.browserversion}, ${a.osversion},
+			${a.devicetype}) returning id""".as(SqlParser.long("id").single)
 		actionid
 	}
 
 	def update(a: Action) {
-		DB.withConnection { implicit c ⇒ SQL"""UPDATE public.tbaction
+		DB.withConnection { implicit c ⇒
+		 SQL"""UPDATE public.tbaction
 					SET visitorid=${a.visitorid}, eventid=${a.eventid}, appid=${a.appid}, osid=${a.osid}, browserid=${a.browserid}, locationid=${a.locationid},
 					referer=${a.referer}, campaignid=${a.campaignid}, deviceid=${a.deviceid}, ctime=${a.ctime}, ip=${a.ip}, screenres=${a.screenres},
 					totalsec=${a.totalsec}, age=${a.age}, url=${a.url}, n1=${a.n1}, n2=${a.n2}, lang=${a.lang}, s1=${a.s1},
-					s2=${a.s2}, browserversion=${a.browserversion}, osversion=${a.osversion}
+					s2=${a.s2}, browserversion=${a.browserversion}, osversion=${a.osversion}, devicetype =${a.devicetype}
 					WHERE id = ${a.id}""".execute()
 		}
 	}

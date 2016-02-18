@@ -17,6 +17,7 @@ libraryDependencies ++= Seq(
 	"com.typesafe.play" %% "anorm" % "2.4.0",
 	"org.yaml" % "snakeyaml" % "1.8",
 	"commons-collections" % "commons-collections" % "3.2.1",
+	"org.codemonkey.simplejavamail" % "simple-java-mail" % "2.1",
 	specs2 % Test
 )
 

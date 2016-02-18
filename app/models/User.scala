@@ -1,6 +1,6 @@
 package models
 
-import java.util.{Date}
+import java.util.Date
 import play.api.db.DB
 import play.api.mvc.Request
 import utils.RParser
@@ -27,7 +27,7 @@ object User {
 		}
 	}
 	val usersParser: ResultSetParser[List[UserData]] = {
-		userParser *
+		userParser.*
 	}
 
 	def bindRequest(implicit request: Request[Any]): UserData = {
